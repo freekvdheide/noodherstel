@@ -1,0 +1,58 @@
+================================================================
+  MACBOOK KWIJT / GECRASHT / GESTOLEN?  BEGIN HIER.
+================================================================
+
+STAP 0 - EERST INTREKKEN, DAN HERSTELLEN (vanaf je telefoon)
+  Wie je Mac heeft, heeft je sessies. Doe dit vóór alles:
+  - Google: myaccount.google.com -> Beveiliging -> apparaten:
+    de oude Mac uitloggen; wachtwoord vervangen.
+  - WhatsApp: Gekoppelde apparaten -> alles ontkoppelen.
+  - bunq-app: API-sleutels intrekken.
+  - GitHub: sessies + tokens intrekken.
+  - Vind mijn Mac: wissen op afstand als dat kan.
+
+STAP 1 - Nieuwe Mac: log in met je Apple ID.
+  Maak de gebruiker aan met EXACT de naam:  freek
+  (Alles verwijst naar /Users/freek. Andere naam = herstel mislukt.)
+  Zet FileVault meteen aan.
+
+STAP 2 - Open Terminal (Cmd-Spatie, "Terminal").
+  Haal het startscript op en controleer de vingerafdruk tegen
+  het papier in je portemonnee:
+
+    curl -fsSLo herstel.sh https://raw.githubusercontent.com/freekvdheide/noodherstel/main/herstel.sh
+    shasum -a 256 herstel.sh
+
+  Klopt de code met het papier? Dan:   bash herstel.sh
+  Klopt 'ie NIET? Niet draaien. Haal herstel.sh dan uit Google Drive
+  (map 00-NOODHERSTEL) en vergelijk opnieuw.
+
+STAP 3 - Het script vraagt je een paar keer iets:
+  Xcode-installatie (klik Installeer), je Mac-wachtwoord (Homebrew),
+  en één Google-inlogscherm (kies freek@wearefireworx.com).
+  Het haalt alleen gereedschap + het herstelpakket op. Meer niet.
+
+STAP 4 - Start Claude Code:   claude
+  En zeg:
+
+  ------------------------------------------------------------
+  Mijn MacBook is weg. Voer het noodherstel uit.
+  Het plan staat in ~/NOODHERSTEL/HERSTEL-PLAN.md.
+  Werk het van boven naar beneden af. Nooit rclone sync.
+  ------------------------------------------------------------
+
+  Claude vraagt je akkoord bij elke stap die iets onomkeerbaars
+  doet. Reken op: dagen downloaden (600 GB), daarna een dag
+  handwerk voor toestemmingen, programma's en plugin-licenties.
+
+================================================================
+WAT JE UIT JE HOOFD MOET KENNEN (of op papier hebben)
+  - Apple ID + wachtwoord
+  - Google-wachtwoord van BEIDE accounts + je 2FA-telefoon
+    (of de back-upcodes op papier)
+  - GitHub-wachtwoord + 2FA
+  - hoofdwachtwoord van je wachtwoordmanager (+ Ledger)
+  - de vingerafdruk (sha256) van herstel.sh
+================================================================
+Dit pakket wordt elke nacht om 00:45 bijgewerkt.
+Datum van de laatste bijwerking: zie LEESMIJ.txt.
