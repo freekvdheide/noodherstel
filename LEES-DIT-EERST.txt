@@ -5,7 +5,7 @@
 STAP 0 - EERST INTREKKEN, DAN HERSTELLEN (vanaf je telefoon)
   Wie je Mac heeft, heeft je sessies. Doe dit vóór alles:
   - Google: myaccount.google.com -> Beveiliging -> apparaten:
-    de oude Mac uitloggen; wachtwoord vervangen.
+    de oude Mac uitloggen; wachtwoord vervangen. Beide accounts.
   - WhatsApp: Gekoppelde apparaten -> alles ontkoppelen.
   - bunq-app: API-sleutels intrekken.
   - GitHub: sessies + tokens intrekken.
@@ -16,23 +16,42 @@ STAP 1 - Nieuwe Mac: log in met je Apple ID.
   (Alles verwijst naar /Users/freek. Andere naam = herstel mislukt.)
   Zet FileVault meteen aan.
 
-STAP 2 - Open Terminal (Cmd-Spatie, "Terminal").
-  Haal het startscript op en controleer de vingerafdruk tegen
-  het papier in je portemonnee:
+STAP 2 - Haal het startscript herstel.sh op en controleer het.
 
-    curl -fsSLo herstel.sh https://raw.githubusercontent.com/freekvdheide/noodherstel/main/herstel.sh
-    shasum -a 256 herstel.sh
+  ROUTE A - GOOGLE DRIVE (de gewone route)
+  1. Open Safari, ga naar drive.google.com en log in als
+     freek@wearefireworx.com.
+  2. Open de map 00-NOODHERSTEL (bovenaan in Mijn Drive).
+  3. Download herstel.sh. Hij komt in je map Downloads.
+  4. Open Terminal (Cmd-Spatie, typ "Terminal", Enter) en typ:
 
-  Klopt de code met het papier? Dan:   bash herstel.sh
-  Klopt 'ie NIET? Niet draaien. Haal herstel.sh dan uit Google Drive
-  (map 00-NOODHERSTEL) en vergelijk opnieuw.
+       cd ~/Downloads
+       shasum -a 256 herstel.sh
+
+     Heet het bestand anders, bijvoorbeeld "herstel (1).sh"?
+     Typ dan die naam tussen aanhalingstekens:
+       shasum -a 256 "herstel (1).sh"
+
+  ROUTE B - GITHUB (als Drive niet lukt, bijv. Google-account geblokkeerd)
+  Open Terminal en typ:
+
+       curl -fsSLo herstel.sh https://raw.githubusercontent.com/freekvdheide/noodherstel/main/herstel.sh
+       shasum -a 256 herstel.sh
+
+  CONTROLEREN (bij beide routes)
+  Er verschijnt een lange code. Vergelijk die met de regel "herstel.sh"
+  op je FileVault-briefje.
+  - Klopt 'ie?  Typ:   bash herstel.sh   (of: bash "herstel (1).sh")
+  - Klopt 'ie NIET?  Niet draaien. Probeer de andere route.
+    Klopt 'ie daar ook niet: helemaal niet draaien. Dan heeft iemand
+    aan het script gezeten.
 
 STAP 3 - Het script vraagt je een paar keer iets:
   Xcode-installatie (klik Installeer), je Mac-wachtwoord (Homebrew),
   en één Google-inlogscherm (kies freek@wearefireworx.com).
   Het haalt alleen gereedschap + het herstelpakket op. Meer niet.
 
-STAP 4 - Start Claude Code:   claude
+STAP 4 - Open een NIEUW Terminal-venster, start Claude Code:   claude
   En zeg:
 
   ------------------------------------------------------------
@@ -52,7 +71,7 @@ WAT JE UIT JE HOOFD MOET KENNEN (of op papier hebben)
     (of de back-upcodes op papier)
   - GitHub-wachtwoord + 2FA
   - hoofdwachtwoord van je wachtwoordmanager (+ Ledger)
-  - de vingerafdruk (sha256) van herstel.sh
+  - de vingerafdruk (sha256) van herstel.sh: op het FileVault-briefje
 ================================================================
-Dit pakket wordt elke nacht om 00:45 bijgewerkt.
-Datum van de laatste bijwerking: zie LEESMIJ.txt.
+Dit pakket wordt elke nacht om 00:45 bijgewerkt, in Drive
+(00-NOODHERSTEL) en op GitHub.
