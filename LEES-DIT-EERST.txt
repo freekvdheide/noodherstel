@@ -6,10 +6,19 @@ STAP 0 - EERST INTREKKEN, DAN HERSTELLEN (vanaf je telefoon)
   Wie je Mac heeft, heeft je sessies. Doe dit vóór alles:
   - Google: myaccount.google.com -> Beveiliging -> apparaten:
     de oude Mac uitloggen; wachtwoord vervangen. Beide accounts.
+  - Google, BELANGRIJK: myaccount.google.com -> Gegevens en privacy
+    -> Apps van derden en koppelingen. Verwijder daar de toegang van
+    "rclone". Dat is de sleutel waarmee de oude Mac bij je hele
+    backup kan (ook om te WISSEN). Doe dit voor beide accounts, maar
+    zeker voor freek@wearefireworx.com. Zonder deze stap kan wie je
+    Mac heeft je backup leegmaken terwijl jij aan het herstellen bent.
   - WhatsApp: Gekoppelde apparaten -> alles ontkoppelen.
   - bunq-app: API-sleutels intrekken.
   - GitHub: sessies + tokens intrekken.
   - Vind mijn Mac: wissen op afstand als dat kan.
+
+  Let op: na het intrekken van rclone vraagt het herstelscript straks
+  gewoon opnieuw om toegang (een Google-inlogscherm). Dat hoort zo.
 
 STAP 1 - Nieuwe Mac: log in met je Apple ID.
   Maak de gebruiker aan met EXACT de naam:  freek
@@ -40,7 +49,9 @@ STAP 2 - Haal het startscript herstel.sh op en controleer het.
 
   CONTROLEREN (bij beide routes)
   Er verschijnt een lange code. Vergelijk die met de regel "herstel.sh"
-  op je FileVault-briefje.
+  op je FileVault-briefje. Dit is de ENIGE controle die jij met de hand
+  doet; de rest van het pakket controleert het script zelf (het kent de
+  vingerafdruk van het plan en de hulpscripts).
   - Klopt 'ie?  Typ:   bash herstel.sh   (of: bash "herstel (1).sh")
   - Klopt 'ie NIET?  Niet draaien. Probeer de andere route.
     Klopt 'ie daar ook niet: helemaal niet draaien. Dan heeft iemand

@@ -59,6 +59,38 @@ for f in HERSTEL-PLAN.md fase2.sh fase3.sh Brewfile exec-bits.txt symlinks.txt t
   [ -f "$HOME/NOODHERSTEL/$f" ] || die "$f ontbreekt in het pakket. Haal de map 00-NOODHERSTEL uit Google Drive en meld dit."
 done
 
+# --- Handtekening over de REST van het pakket (stresstest v2, B5) ------------------------------
+# Jij hebt met de hand alleen DIT script tegen het papier gecontroleerd. HERSTEL-PLAN.md, fase2.sh,
+# fase3.sh en de leeswijzer komen ongecontroleerd uit Drive, worden daarna uitgevoerd (fase2/3) of
+# als instructie aan Claude gegeven (HERSTEL-PLAN). Wie schrijftoegang tot die map heeft, kan daar
+# dus een opdracht in smokkelen. De vertrouwensketen: papier -> dit script -> de waarde hieronder.
+# Wijzigt een van die vier bestanden, dan wijzigt deze waarde, dan wijzigt dit script, dan is er een
+# nieuwe sha op papier nodig. De nachtelijke snapshot bewaakt dat (tools/pakket-sha.sh).
+PAKKET_SHA="aa93f173bd1a115302b1e3932f9816297af40c1cf870e17c4dca77fe74908ae8"
+pakket_sha_nu(){ ( cd "$HOME/NOODHERSTEL" && shasum -a 256 HERSTEL-PLAN.md LEES-DIT-EERST.txt fase2.sh fase3.sh ) | shasum -a 256 | cut -c1-64; }
+rm -f "$HOME/NOODHERSTEL/pakket-sha-OK"
+NU="$(pakket_sha_nu)"
+if [ "$PAKKET_SHA" = "$NU" ]; then
+  echo "OK $NU" > "$HOME/NOODHERSTEL/pakket-sha-OK"
+  echo "     pakket-handtekening klopt."
+else
+  cat <<MELD
+
+  !! STOP -- DE REST VAN HET PAKKET KLOPT NIET MET DIT SCRIPT.
+     verwacht: $PAKKET_SHA
+     gevonden: $NU
+  Het plan of een van de hulpscripts is gewijzigd sinds dit startscript is gemaakt.
+  Twee mogelijkheden:
+   1. Onschuldig: het pakket is bijgewerkt en er hoort een NIEUWE sha op je papiertje.
+      Herken je een recente wijziging niet? Ga dan uit van 2.
+   2. Iemand heeft aan de bestanden in Google Drive gezeten.
+  Haal in dat geval het pakket via de GitHub-route (zie LEES-DIT-EERST, route B) en
+  vergelijk. Voer HERSTEL-PLAN.md NIET uit voordat dit is uitgezocht.
+
+MELD
+  die "pakket-handtekening komt niet overeen."
+fi
+
 say "7/7 De rem zetten: de backup-jobs doen niets tot fase 7 van het plan"
 mkdir -p "$HOME/PROJECTS/DRIVE-BACKUP"
 date > "$HOME/PROJECTS/DRIVE-BACKUP/backup-PAUSED"
