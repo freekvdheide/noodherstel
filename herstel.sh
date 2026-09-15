@@ -66,7 +66,7 @@ done
 # dus een opdracht in smokkelen. De vertrouwensketen: papier -> dit script -> de waarde hieronder.
 # Wijzigt een van die vier bestanden, dan wijzigt deze waarde, dan wijzigt dit script, dan is er een
 # nieuwe sha op papier nodig. De nachtelijke snapshot bewaakt dat (tools/pakket-sha.sh).
-PAKKET_SHA="aa93f173bd1a115302b1e3932f9816297af40c1cf870e17c4dca77fe74908ae8"
+PAKKET_SHA="878a47e779afa7666a1b6b324837adfbb469a73dd69dc35beb3a0526982fef86"
 pakket_sha_nu(){ ( cd "$HOME/NOODHERSTEL" && shasum -a 256 HERSTEL-PLAN.md LEES-DIT-EERST.txt fase2.sh fase3.sh ) | shasum -a 256 | cut -c1-64; }
 rm -f "$HOME/NOODHERSTEL/pakket-sha-OK"
 NU="$(pakket_sha_nu)"
