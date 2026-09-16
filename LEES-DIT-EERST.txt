@@ -75,6 +75,12 @@ STAP 4 - Open een NIEUW Terminal-venster, start Claude Code:   claude
   doet. Reken op: dagen downloaden (600 GB), daarna een dag
   handwerk voor toestemmingen, programma's en plugin-licenties.
 
+  Wat NIET terugkomt: de gespreksgeschiedenis van Claude (de oude
+  chats, ruim 15.000 bestanden). Die gaat bewust niet mee in de
+  backup, omdat er wachtwoorden en sleutels in kunnen staan. Claude
+  begint dus met een leeg geheugen voor gesprekken; de kennis,
+  regels en projectbestanden komen wel gewoon terug.
+
 ================================================================
 WAT JE UIT JE HOOFD MOET KENNEN (of op papier hebben)
   - Apple ID + wachtwoord

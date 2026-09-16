@@ -38,7 +38,12 @@ command -v claude >/dev/null 2>&1 || die "claude niet gevonden na installatie."
 say "5/7 ALLEEN-LEZEN toegang tot de backup. Er opent een Google-inlogscherm: kies freek@wearefireworx.com."
 echo "     (Op de vraag 'Configure this as a Shared Drive' is het antwoord n.)"
 if ! rclone listremotes 2>/dev/null | grep -q '^gdrive-restore:$'; then
-  printf 'n\n' | rclone config create gdrive-restore drive scope drive.readonly
+  # >/dev/null: rclone drukt de VOLLEDIGE remote-config af na het aanmaken, inclusief access_token
+  # en refresh_token in platte tekst. Op een terminal die meeschrijft (script/tee/transcript) is dat
+  # een levend inloggegeven in een logbestand. Gevonden tijdens het proefherstel van 16-09-2026:
+  # het token belandde in een log in /Users/Shared, dat 's nachts mee de backup in gaat.
+  # Fouten blijven zichtbaar (stderr gaat niet mee), en de controle hieronder toetst of het werkte.
+  printf 'n\n' | rclone config create gdrive-restore drive scope drive.readonly >/dev/null
 fi
 if ! rclone lsd gdrive-restore:BACKUP-FREEK-MAC/current >/dev/null 2>&1; then
   rclone config delete gdrive-restore 2>/dev/null
@@ -66,7 +71,7 @@ done
 # dus een opdracht in smokkelen. De vertrouwensketen: papier -> dit script -> de waarde hieronder.
 # Wijzigt een van die vier bestanden, dan wijzigt deze waarde, dan wijzigt dit script, dan is er een
 # nieuwe sha op papier nodig. De nachtelijke snapshot bewaakt dat (tools/pakket-sha.sh).
-PAKKET_SHA="878a47e779afa7666a1b6b324837adfbb469a73dd69dc35beb3a0526982fef86"
+PAKKET_SHA="cd4070d5f0464c4005ed6ca73a2566e4241fe1b08aae1f50661045ffde765781"
 pakket_sha_nu(){ ( cd "$HOME/NOODHERSTEL" && shasum -a 256 HERSTEL-PLAN.md LEES-DIT-EERST.txt fase2.sh fase3.sh ) | shasum -a 256 | cut -c1-64; }
 rm -f "$HOME/NOODHERSTEL/pakket-sha-OK"
 NU="$(pakket_sha_nu)"
